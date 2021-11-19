@@ -1,7 +1,7 @@
 import pyodbc
 
 
-class DAO():
+class DAO:
 
     def getConection(self):
         try:
@@ -12,7 +12,7 @@ class DAO():
             print("Error al intentar conexion {0}", ex)
 
 
-    def listarCursos(self, conexion):
+    def listCourses(self, conexion):
             try:
                 with conexion.cursor() as cursor:
                     cursor.execute("SELECT name, id  FROM Student;")

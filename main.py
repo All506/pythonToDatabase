@@ -5,7 +5,7 @@ if __name__ == '__main__':
     dao = DAO()
 
     try:
-        cursos = dao.listarCursos(dao.getConection())
+        cursos = dao.listCourses(dao.getConection())
         functions.listarCursos(cursos)
     except:
        print("Error en cursos")
