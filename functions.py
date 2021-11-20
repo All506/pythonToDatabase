@@ -1,3 +1,5 @@
+#   Student Functions
+
 def listStudents(students):
     print("Listed Students: ")
 
@@ -37,3 +39,30 @@ def updateStudent():
     student = (name, homeAddress, studyAddress, email, regStatus)
     return student
 
+#   Course Functions
+
+
+def listCourses(courses):
+    print("Listed Courses: ")
+
+    for course in courses:
+        print("CourseId: {0} Name: {1} Credits: {2} Status: {3} \n".format(course[0], course[1], course[2], course[3]))
+
+
+def registerCourse():
+    idCourse = input("Course Acronym: ")
+    name = input("Course Name: ")
+    totalCredits = input("Credits: ")
+    status = input("Status: ")
+
+    course = (idCourse.upper(), name, totalCredits, status)  # Upper idCourse to standardize different idCourses
+    return course
+
+
+def existsCourse(courses, idCourse):
+    exist = False
+    for crs in courses:
+        if crs[0] == idCourse:
+            exist = True
+            break
+    return exist
