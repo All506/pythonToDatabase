@@ -1,14 +1,4 @@
-from BD.conexion import DAO
-import functions
+from UI.mainMenu import mainMenu
 
 if __name__ == '__main__':
-    dao = DAO()
-
-    try:
-        cursos = dao.listCourses(dao.getConection())
-        functions.listarCursos(cursos)
-    except:
-       print("Error en cursos")
-
-
-
+    mainMenu()
