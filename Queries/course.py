@@ -1,6 +1,6 @@
 class courseQueries:
 
-    # Methods related to students
+    # Methods related to course
 
     def listCourses(self, conexion):
         try:
