@@ -8,6 +8,7 @@ from Queries.group import groupQueries
 from Queries.asoPresident import asoPresidentQueries
 from Queries.period import periodQueries
 from Queries.telephone import telephoneQueries
+from Queries.studentGroup import studentGroupQueries
 
 dao = DAO()  # Data Access Object
 
@@ -20,7 +21,8 @@ def mainMenu():
         print("3. Periods")
         print("4. Groups")
         print("5. Enroll Student")
-        print("6. Exit")
+        print("6. Views")
+        print("7. Exit")
         option = int(input("Please choose one of the options to use "))
         if option == 1:
             studentMenu()
@@ -33,7 +35,9 @@ def mainMenu():
         elif option == 5:
             enrollMenu()
         elif option == 6:
-            break;
+            viewMenu()
+        elif option == 7:
+            break
         else:
             system('cls')
             print("Please select a valid option")
@@ -258,7 +262,7 @@ def periodMenu():
                 input("Press enter to continue...")
             elif option == 2:  # Create a new period
                 print("Please hold a sec...")
-                courses = cq.listCourses()
+                courses = cq.listCourses(dao.getConection())
                 system('cls')
                 print("New Period Information")
                 periods = functions.registerPeriod()
@@ -352,4 +356,83 @@ def phoneNumberMenu():
 
 
 def enrollMenu():
-    print("Terminelo")
+    stdg = studentGroupQueries()
+    cq = courseQueries()
+    sq = studentQueries()
+    gq = groupQueries()
+    while True:
+        system('cls')
+        print("Enroll Student Menu")
+        print("1. Show Enrolled Students")
+        print("2. Enroll Student")
+        print("3. De-Enroll Student")
+        print("4. Return to main menu")
+        option = int(input("Select a valid option"))
+        if option > 4 or option <= 0:
+            print("Select a valid option")
+            input("Press enter to continue")
+        elif option == 1:
+            system('cls')
+            print("Please hold a sec...")
+            students = sq.listStudents(dao.getConection())
+            courses = cq.listCourses(dao.getConection())
+            stgroups = stdg.listStudentGroup(dao.getConection())
+            system('cls')
+            functions.listStudentEnroll(students,courses,stgroups)
+        elif option == 2:
+            # Make sure group and course exist
+            print("Please hold a sec...")
+            students = sq.listStudents(dao.getConection())
+            courses = cq.listCourses(dao.getConection())
+            groups = gq.listGroups(dao.getConection())
+            studentGroups = stdg.listStudentGroup(dao.getConection())
+            system("cls")
+            studentGroup = functions.registerStudentGroup()
+            system('cls')
+            if functions.existsCourse(courses, studentGroup[1]):
+                if functions.existsStudent(students, int(studentGroup[0])):
+                    if functions.existsGroup(groups, int(studentGroup[2])):
+                        if not functions.existStudentGroup(studentGroups, studentGroup):
+                            stdg.registStudentGroup(dao.getConection(), studentGroup)
+                        else:
+                            print("Student is already registered in same group")
+                    else:
+                        print("Group is not registered. Please try again...")
+                else:
+                    print("Student is not registered. Please try again...")
+            else:
+                print("Course is not registered. Please try again...")
+            input("Press enter to continue...")
+        if option == 3:
+            # Make sure group and course exist
+            print("Please hold a sec...")
+            studentGroups = stdg.listStudentGroup(dao.getConection())
+            system("cls")
+            studentGroup = functions.registerStudentGroup()
+            system("cls")
+            if functions.existStudentGroup(studentGroups, studentGroup):
+                stdg.deleteStudentGroup(dao.getConection(), studentGroup)
+                input("Press enter to continue")
+            else:
+                print("Student is not registered in this group")
+        if option == 4:
+            break
+
+
+def viewMenu():
+    sq = studentQueries()
+    while True:
+        system('cls')
+        print("View Menu")
+        print("1. Student and Groups View")
+        print("2. Continue")
+        option = int(input("Select a valid option"))
+        if option > 1 or option < 0:
+            print("Select a valid option")
+            input("Press enter to continue")
+        elif option == 1:
+            system('cls')
+            sq.showView1(dao.getConection())
+            input("Press enter to continue")
+        elif option == 2:
+            break

@@ -1,3 +1,4 @@
+from os import system  # Will be used to clean screen
 #   Student Functions
 
 def listStudents(students):
@@ -78,8 +79,8 @@ def listGroup(groups):
 
 
 def registerGroup():
-    idCourse = input("Course Acronym: ")
-    number = input("Group Number: ")
+    idCourse = checkInput("Course Acronym: ", "String")
+    number = checkInput("Group Number: ", "Integer")
 
     group = (idCourse.upper(), number)  # Upper idCourse to standardize different idCourses
     return group
@@ -118,11 +119,26 @@ def listPeriods(periods):
 
 
 def registerPeriod():
-    idCourse = input("IdCourse of Period: ")
-    period = input("Period: ")
+    idCourse = checkInput("IdCourse: ", "String")
+    period = checkInput("Period: ", "String")
+
 
     period = (idCourse.upper(), period)  # Upper idCourse to standardize different idCourses
     return period
+
+
+def checkInput(text, format):
+    while True:
+        if format == "String":
+            variable = input(text)
+            if not variable == "":
+                return variable
+        if format == "Integer":
+            variable = input(text)
+            if not variable == "" and variable.isnumeric():
+                return int(variable)
+        input("Please write a valid input. Try again \nPress enter to continue...")
+        system("cls")
 
 
 def existPeriod(periods, period):
@@ -149,6 +165,38 @@ def existTelephone(telephones, telephone):
     exist = False
     for phones in telephone:
         if phones[0] == telephone[0] and phones[1] == telephone[1]:
+            exist = True
+            break
+    return exist
+
+
+# StudentGroup Functions
+
+def listStudentEnroll(students,courses, studentGroups):
+    print("Listed Enrolled Students Numbers")
+
+    for stdg in studentGroups:
+        for crs in courses:
+            for std in students:
+                if stdg[1] == crs[0] and std[0] == stdg[0]:
+                    print("Student Name: {0} Course Name {1} Group Number: {2}".format(std[1], crs[1], stdg[2]))
+                    input("Press enter to continue...")
+
+
+def registerStudentGroup():
+    print("Information about student")
+    idStudent = int(input("Write student's id: "))
+    idCourse = input("IdCourse: ")
+    groupNumber = int(input("Write the group: "))
+
+    studentGroup = (idStudent, idCourse.upper(), groupNumber)
+    return studentGroup
+
+
+def existStudentGroup(studentGroups, studentGroup):
+    exist = False
+    for stdg in studentGroups:
+        if stdg[0] == studentGroup[0] and stdg[1] == studentGroup[1] and stdg[2] == studentGroup[2]:
             exist = True
             break
     return exist

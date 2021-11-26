@@ -76,3 +76,18 @@ class studentQueries:
         finally:
             input()
             conexion.close()
+
+    def showView1(self, conexion):
+        try:
+            with conexion.cursor() as cursor:
+                cursor.execute("SELECT * FROM view1")
+                query = cursor.fetchall()
+                conexion.commit()
+                print("Courses enrolled by Student")
+                for std in query:
+                    print("Name: {0} Id Student: {1} Group Number: {2} Course Name: {3} Period: {4}".format(std[0],std[1],std[2],std[3],std[4]))
+        except Exception as e:
+            print("Error in view query: ", e)
+        finally:
+            conexion.close()
+
