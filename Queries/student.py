@@ -15,6 +15,19 @@ class studentQueries:
         finally:
             conexion.close()
 
+    def listStudentsPhones(self, conexion):
+        try:
+            with conexion.cursor() as cursor:
+                cursor.execute("SELECT S.IdStudent, S.[Name], T.Telephone FROM [dbo].[tblStudent] S LEFT OUTER JOIN [dbo].[tblTelephone] T ON S.IdStudent=T.IdStudent;")
+
+                students = cursor.fetchall()
+
+                return students
+        except Exception as e:
+            print("Error in query: ", e)
+        finally:
+            conexion.close()
+
     def registStudent(self, conexion, student):
         try:
             with conexion.cursor() as cursor:

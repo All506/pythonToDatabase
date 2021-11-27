@@ -56,9 +56,11 @@ def studentMenu():
         print("4. Update a student")
         print("5. Contact Information")
         print("6. Declare Student's Association President")
-        print("7. Go back to Main Menu")
+        print("7. Show all students and Phones")
+        print("8. Go back to Main Menu")
+
         option = int(input("Please choose one of the options to use "))
-        if option > 7 or option <= 0:  # Invalid Option
+        if option > 8 or option <= 0:  # Invalid Option
             print("Chose one valid option. Please try again...")
             input("Press enter to continue...")
         else:
@@ -67,6 +69,12 @@ def studentMenu():
                 students = sq.listStudents(dao.getConection())
                 system('cls')
                 functions.listStudents(students)
+                input("Press enter to continue...")
+            elif option == 7:  # Show all students and phones
+                print("Please hold a sec...")
+                students = sq.listStudentsPhones(dao.getConection())
+                system('cls')
+                functions.listStudentsPhones(students)
                 input("Press enter to continue...")
             elif option == 2:  # Create a new student
                 student = functions.registerStudent()
@@ -112,7 +120,7 @@ def studentMenu():
                 else:
                     print("Id does not exist. Please try again")
                     input("Press enter to continue...")
-            elif option == 7:  # Return to main
+            elif option == 8:  # Return to main
                 break
 
 
@@ -351,7 +359,7 @@ def phoneNumberMenu():
                 tq.deleteTelephone(dao.getConection(), (idStudent, oldNumber))
                 tq.registerTelephone(dao.getConection(), (idStudent, newTelephone))
         elif option == 5:
-            break;
+            break
 
 
 def enrollMenu():

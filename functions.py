@@ -8,6 +8,12 @@ def listStudents(students):
     for student in students:
         print("Identification: {0} Name: {1} Home Address: {2} Study Address: {3} Email {4} Request Status: {5}\n".format(student[0],student[1],student[2],student[3],student[4],student[5]))
 
+def listStudentsPhones(students):
+    print("Listed Students: ")
+
+    for student in students:
+        print("Identification: {0}\t\t Name: {1}\t\t Telephone: {2} \n".format(student[0],student[1],student[2]))
+
 
 def registerStudent():
     name = checkInput("Student Name: ", "String")
