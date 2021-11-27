@@ -1,6 +1,7 @@
 from os import system  # Will be used to clean screen
 #   Student Functions
 
+
 def listStudents(students):
     print("Listed Students: ")
 
@@ -9,10 +10,10 @@ def listStudents(students):
 
 
 def registerStudent():
-    name = input("Student Name: ")
-    homeAddress = input("Home Address: ")
-    studyAddress = input("Study Address: ")
-    email = input("Student's eMail: ")
+    name = checkInput("Student Name: ", "String")
+    homeAddress = checkInput("Home Address: ", "String")
+    studyAddress = checkInput("Study Address: ", "String")
+    email = checkInput("Student's eMail: ", "String")
     regStatus = "Pending"
 
     student = (name, homeAddress, studyAddress, email, regStatus)
@@ -29,14 +30,36 @@ def existsStudent(students, idStudent):
 
 
 def updateStudent():
-    name = input("Student Name: ")
-    homeAddress = input("Home Address: ")
+    system('cls')
+    name = checkInput("Student Name: ", "String")
+    homeAddress = checkInput("Home Address: ", "String")
     studyAddress = input("Study Address: ")
-    email = input("Student's eMail: ")
-    regStatus = input("Student Status: ")
+    email = checkInput("Student's eMail: ", "String")
+    regStatus = None
+    option = 0
+    while True:
+        system('cls')
+        print("Student Status")
+        print("1. Pending")
+        print("2. Rejected")
+        print("3. Accepted")
+        option = checkInput("Student Status: ", "Integer")
+        if option > 3 or option < 0:
+            input("Select a valid option. \n Press enter to continue")
+            system('cls')
+        elif option == 1:
+            regStatus = "Pending"
+            break
+        elif option == 2:
+            regStatus = "Rejected"
+            break
+        elif option == 3:
+            regStatus = "Accepted"
+            break
 
     if studyAddress == "":
-        studyAddress = 'NULL'
+        studyAddress = homeAddress  # Business Rule: if student does not have studying address it is the same as home address
+
     student = (name, homeAddress, studyAddress, email, regStatus)
     return student
 
@@ -51,10 +74,10 @@ def listCourses(courses):
 
 
 def registerCourse():
-    idCourse = input("Course Acronym: ")
-    name = input("Course Name: ")
-    totalCredits = input("Credits: ")
-    status = input("Status: ")
+    idCourse = checkInput("Course Acronym: ", "String")
+    name = checkInput("Course Name: ", "String")
+    totalCredits = checkInput("Credits: ", "Integer")
+    status = checkInput("Status: ", "String")
 
     course = (idCourse.upper(), name, totalCredits, status)  # Upper idCourse to standardize different idCourses
     return course
@@ -122,7 +145,6 @@ def registerPeriod():
     idCourse = checkInput("IdCourse: ", "String")
     period = checkInput("Period: ", "String")
 
-
     period = (idCourse.upper(), period)  # Upper idCourse to standardize different idCourses
     return period
 
@@ -185,9 +207,9 @@ def listStudentEnroll(students,courses, studentGroups):
 
 def registerStudentGroup():
     print("Information about student")
-    idStudent = int(input("Write student's id: "))
-    idCourse = input("IdCourse: ")
-    groupNumber = int(input("Write the group: "))
+    idStudent = checkInput("Write student's id: ", "Integer")
+    idCourse = checkInput("IdCourse: ", "String")
+    groupNumber = checkInput("Write the group: ", "Integer")
 
     studentGroup = (idStudent, idCourse.upper(), groupNumber)
     return studentGroup

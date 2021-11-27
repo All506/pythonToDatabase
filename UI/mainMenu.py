@@ -313,9 +313,9 @@ def phoneNumberMenu():
             students = sq.listStudents(dao.getConection())
             system('cls')
             functions.listStudents(students)
-            idStudent = int(input("Write student's id: "))
+            idStudent = functions.checkInput("Write student's id: ", "Integer")
             if functions.existsStudent(students,idStudent):
-                number = input("Write students phone number: ")
+                number = functions.checkInput("Write students phone number: ", "String")
                 telephone = (idStudent, number)
                 tq.registerTelephone(dao.getConection(), telephone)
             else:
@@ -328,10 +328,10 @@ def phoneNumberMenu():
             system('cls')
             functions.listPhones(telephones,students)
             print("Telephone to delete information")
-            idStudent = int(input("Write student's id: "))
+            idStudent = functions.checkInput("Write student's id: ", "Integer")
             system('cls')
             if functions.existsStudent(students, idStudent):
-                number = input("Write students phone number: ")
+                number = functions.checkInput("Write students phone number: ", "String")
                 telephone = (idStudent, number)
                 tq.deleteTelephone(dao.getConection(), telephone)
             else:
@@ -343,12 +343,11 @@ def phoneNumberMenu():
             students = sq.listStudents(dao.getConection())
             functions.listPhones(telephones,students)
             print("Telephone to update information")
-            idStudent = int(input("Write student's id: "))
+            idStudent = functions.checkInput("Write student's id: ", "Integer")
             system('cls')
             if functions.existsStudent(students, idStudent):
-                oldNumber = input("Write students phone number: ")
-                # telephone = (idStudent, oldNumber)
-                newTelephone = input("Write the new phone number: ")
+                oldNumber = functions.checkInput("Write students phone number: ", "String")
+                newTelephone = functions.checkInput("Write students new phone number: ", "String")
                 tq.deleteTelephone(dao.getConection(), (idStudent, oldNumber))
                 tq.registerTelephone(dao.getConection(), (idStudent, newTelephone))
         elif option == 5:
@@ -427,7 +426,7 @@ def viewMenu():
         print("1. Student and Groups View")
         print("2. Continue")
         option = int(input("Select a valid option"))
-        if option > 1 or option < 0:
+        if option > 2 or option < 0:
             print("Select a valid option")
             input("Press enter to continue")
         elif option == 1:
